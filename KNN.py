@@ -41,10 +41,12 @@ def calculateRange(targetHeight, cameraAngle, vertOffset):
 while True:
     target_detected = sd.getBoolean("tv", False)
 
+    # Calculate range of if target is detected
     if target_detected:
         targetRange = calculateRange(net_height, limelight_angle, sd.getNumber("ty", 0))
         output = model.predict([[targetRange]])
 
+        # Switch between UDP and network tables for sending positional data.
         if not useUDP:
             sd.putNumber("targetRPM", output[0][0])
             sd.putNumber("targetAngle", output[0][1])
